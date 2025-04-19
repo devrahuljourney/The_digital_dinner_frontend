@@ -10,12 +10,10 @@ const Navbar = () => {
   return (
     <nav className="bg-[#FFF8F0]/95 backdrop-blur-md text-[#2F2F2F] shadow-md">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        {/* Logo / Title */}
         <NavLink to="/" className="text-2xl font-extrabold text-[#FF4E42] tracking-wide">
           🍽 Digital Diner
         </NavLink>
 
-        {/* Desktop Navigation */}
         <ul className="hidden md:flex items-center gap-8 text-base font-medium">
           {navLinks.map((link) => (
             <li key={link.name}>
@@ -35,7 +33,6 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Mobile Menu Toggle */}
         <div className="md:hidden z-20">
           <button
             onClick={() => setMobileMenuOpen((prev) => !prev)}
@@ -46,7 +43,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
       <div
         className={`md:hidden bg-[#FFF8F0] transition-all duration-300 overflow-hidden ${
           mobileMenuOpen ? "max-h-[500px] py-3" : "max-h-0"

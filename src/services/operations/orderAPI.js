@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { apiconnector } from "../utils/apiconnector";
-import { orderEndpoints } from "./api";
+import { orderEndpoints } from "../api";
 
 const { CREATE_ORDER, GET_ALL_ORDER } = orderEndpoints;
 
