@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { fetchProductsByCategory } from "../../services/operations/productAPI";
-
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "../../slices/cartSlice";
 const ProductGrid = ({ categoryId }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
+  const {cart} = useSelector((state) => state.cart);
 
   useEffect(() => {
     if (!categoryId) return;
@@ -27,6 +31,18 @@ const ProductGrid = ({ categoryId }) => {
     };
     fetchProducts();
   }, [categoryId]);
+
+  const isInCart = (productId) => {
+    return cart.some((item) => item._id === productId);
+  };
+
+  const handleCartToggle = (product) => {
+    if (isInCart(product._id)) {
+      dispatch(removeFromCart(product));
+    } else {
+      dispatch(addToCart(product));
+    }
+  };
 
   if (loading) {
     return (
@@ -57,8 +73,13 @@ const ProductGrid = ({ categoryId }) => {
             <h3 className="text-xl font-semibold text-[#2F2F2F]">{prod.name}</h3>
             <p className="text-sm text-[#7C7C7C]">{prod.description}</p>
             <p className="text-[#FF4E42] font-semibold text-lg">₹{prod.price}</p>
-            <button className="w-full bg-[#6C9A8B] text-white py-3 rounded-lg hover:bg-[#567c6d] transition-all duration-300">
-              Add to Cart
+            <button
+              onClick={() => handleCartToggle(prod)}
+              className={`w-full ${
+                isInCart(prod._id) ? "bg-red-500 hover:bg-red-600" : "bg-[#6C9A8B] hover:bg-[#567c6d]"
+              } text-white py-3 rounded-lg transition-all duration-300`}
+            >
+              {isInCart(prod._id) ? "Remove from Cart" : "Add to Cart"}
             </button>
           </div>
         </div>
